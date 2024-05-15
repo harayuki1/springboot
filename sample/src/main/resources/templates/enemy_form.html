@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h1 th:text="${title}"></h1>
+	<form method="get" th:action="@{/enemys}">
+		<p>名前：<input type="text" name="paramA"></p>
+		<p>HP：<input type="text" name="paramB"></p>
+		<p>攻撃力：<input type="text" name="paramC"></p>
+		<input type="submit" value="送信">
+	</form>
+</body>
+
+</html>

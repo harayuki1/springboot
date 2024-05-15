@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Fancy Website</title>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header, nav, main, footer {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover {
+            color: #17a2b8;
+        }
+
+        main {
+            text-align: center;
+        }
+
+        section {
+            padding: 50px 0;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease-in-out;
+            display: inline-block;
+            width: 90%; /* セクションの幅を画面幅の90%に設定 */
+            max-width: 600px; /* セクションの最大幅を設定 */
+        }
+
+        section:hover {
+            transform: translateY(-10px);
+        }
+
+        h2 {
+            color: #343a40;
+        }
+
+        p {
+            color: #6c757d;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My Animated Fancy Website</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
+            <li><a th:href="@{/}">index</a></li>
+            <li><a th:href="@{/home}">home</a></li>
+            <li><a th:href="@{/effect}">effect</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="section1">
+            <img th:src="@{square.jpg}" style="max-width: 100%;" alt="Square">
+        </section>
+
+        <section id="section2">
+            <img th:src="@{mountain.jpg}" style="max-width: 100%;" alt="Mountain">
+        </section>
+
+        <section id="section3">
+            <img th:src="@{ocean.jpg}" style="max-width: 100%;" alt="Ocean">
+        </section>
+
+        <section id="section4">
+            <img th:src="@{eagle.jpg}" style="max-width: 100%;" alt="Eagle">
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Animated Fancy Website. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
