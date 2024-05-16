@@ -1,5 +1,7 @@
 package com.example.sample;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ public class TestController {
 	MyService service;
 	@Autowired
 	EnemyService enemyservice;
+	@Autowired
+	PersonRepository personRepository;
 	@Autowired
 	EnemyRepository enemyRepository;
 	
@@ -129,29 +133,57 @@ public class TestController {
 	}
 
 	@GetMapping("/persons")
-	public String showPersons(Model model) {
-		
-		model.addAttribute("persons", service.getPersonList());
+	public String showPersons(@RequestParam(value = "keyword", required = false) String keyword,Model model) {
+		List<Person> persons;
+        if (keyword != null && !keyword.isEmpty()) {
+            persons = personRepository.findByNameContaining(keyword);
+        } else {
+            persons = personRepository.findAll();
+        }
+		model.addAttribute("persons", persons);
+		model.addAttribute("keyword", keyword);
 		return "persons";
 	}
+	@PostMapping("/persons")
+    public String savePerson(@Validated Person person, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "入力画面");
+            model.addAttribute("person", person);
+            return "person_form";
+        }
+        personRepository.save(person);
+        return "redirect:/persons";
+    }
+	@PostMapping("/delete/{id}")
+    public String deletePerson(@PathVariable("id") int id) {
+        personRepository.deleteById(id);
+        return "redirect:/persons"; 
+    }
 	
-	@GetMapping("/enemys")
-	public String showEnemys(@RequestParam String paramA, @RequestParam String paramB, @RequestParam String paramC,Model model) {
-		int B=Integer.parseInt(paramB);
-		int C=Integer.parseInt(paramC);
-		Enemy e = new Enemy(paramA, B, C);
+	@GetMapping("/person_form")
+	public String person_form(Model model) {
+		model.addAttribute("title", "入力画面");
+		model.addAttribute("person", new Person());
+		return "person_form";
+	}
 
-		System.out.println(B);
-		System.out.println(C);
-		enemyRepository.save(e);
-		model.addAttribute("enemys", enemyservice.getEnemyList());
+	
+	@PostMapping("/enemys")
+	public String showEnemys(@Validated Enemy enemy, BindingResult bindingResult,Model model) {
 		
-		return "enemys";
+		if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "入力画面");
+            model.addAttribute("enemy", enemy);
+            return "enemy_form";
+        }
+        enemyRepository.save(enemy);
+        return "redirect:/enemys";
 	}
 	
 	@GetMapping("/enemy_form")
 	public String getEnemyform(Model model) {
 		model.addAttribute("title", "入力画面");
+		model.addAttribute("enemy", new Enemy());
 		return "enemy_form";
 	}
 	

@@ -3,28 +3,41 @@
 
 <head>
 	<title>Person List</title>
-	
-	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css"> 
-	
+
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+
 </head>
 
 <body>
+	<form th:action="@{/persons}" method="get">
+		<input type="text" name="keyword" placeholder="検索" th:value="${keyword}">
+		<button type="submit">検索</button>
+	</form>
 	<table>
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Age</th>
 				<th>Address</th>
+				<th>削除</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="person : ${persons}">
 				<td th:text="${person.name}">Name</td>
 				<td th:text="${person.age}">Age</td>
-				<td th:text="${person.address}">Address</td>				
+				<td th:text="${person.address}">Address</td>
+				<td>
+					<form th:action="@{'/delete/' + ${person.id}}" method="post">
+						<button type="submit">削除</button>
+					</form>
+				</td>
 			</tr>
 		</tbody>
 	</table>
+	<form th:action="@{/person_form}" method="get">
+		<button type="submit">項目の追加</button>
+	</form>
 </body>
 
 </html>

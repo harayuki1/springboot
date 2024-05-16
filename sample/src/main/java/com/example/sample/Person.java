@@ -6,9 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,15 +31,16 @@ public class Person {
 	private int id;
 	
 	
-	@NotBlank(message = "何か入力してください")
-	@Size(min = 3, max = 10, message = "3～10文字以内にしてください")
-	private String name = "あ";
+	@NotBlank(message = "名前を入力してください")
+    private String name;
 
-	@Min(value=0, message = "3～10文字以内にしてください")
-	private int age = 0;
+    @NotNull(message = "年齢を入力してください")
+    @PositiveOrZero(message = "年齢は0以上の値で入力してください")
+    private int age;
 
-	@NotBlank(message = "何か入力してください")
-	private String address;
+    @NotBlank(message = "住所を入力してください")
+    private String address;
+
 	
 	@Override
 	public String toString() {

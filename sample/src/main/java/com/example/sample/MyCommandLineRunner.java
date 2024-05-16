@@ -19,24 +19,24 @@ public class MyCommandLineRunner implements CommandLineRunner {
 		System.out.println("コマンドラインランナー実行開始");
 
 		
-//		Person person = new Person("徳川家康", 5, "江戸");
-//		Person p1 = new Person("織田信長", 18, "安土城");
-//		Person p2 = new Person("豊臣秀吉", 15, "大阪城");
-//		Person p3 = new Person("徳川家康", 10, "江戸城");
-//		Enemy e = new Enemy("monster", 10, 1);
-//		Enemy e1 = new Enemy("monster1", 10, 1);
+		Person person = new Person("徳川家康", 5, "江戸");
+		Person p1 = new Person("織田信長", 18, "安土城");
+		Person p2 = new Person("豊臣秀吉", 15, "大阪城");
+		Person p3 = new Person("徳川家康", 10, "江戸城");
+		Enemy e = new Enemy("monster", 10, 1);
+		Enemy e1 = new Enemy("monster1", 10, 1);
 //
 //		Person person=personRepository.findById(1);
 //		person.setName("徳川家康");
 //		
 //		System.out.println(person.toString());
-//		personRepository.save(person);
-//		personRepository.save(p1);
-//		personRepository.save(p2);
-//		personRepository.save(p3);
+		personRepository.save(person);
+		personRepository.save(p1);
+		personRepository.save(p2);
+		personRepository.save(p3);
 		
-//		enemyRepository.save(e);
-//		enemyRepository.save(e1);
+		enemyRepository.save(e);
+		enemyRepository.save(e1);
 //
 //		List<Person> list = personRepository.findByAgeBetween(8,16);
 //		for (Person p : list) {
@@ -55,7 +55,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 		}
 		//personRepository.deleteById();
 
-		//		personRepository.save(person);
+		//personRepository.save(person);
 		System.out.println("コマンドラインランナー実行終了");
 	}
 

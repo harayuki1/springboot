@@ -3,12 +3,28 @@
 
 <body>
 	<h1 th:text="${title}"></h1>
-	<form method="get" th:action="@{/enemys}">
-		<p>名前：<input type="text" name="paramA"></p>
-		<p>HP：<input type="text" name="paramB"></p>
-		<p>攻撃力：<input type="text" name="paramC"></p>
-		<input type="submit" value="送信">
+	<form method="post" th:action="@{/enemys}" th:object="${enemy}">
+		<div>
+			<label for="name">名前:</label>
+			<input type="text" name="name" th:field="*{name}" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{paramA}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="Hp">HP:</label>
+			<input type="text" name="Hp" th:field="*{Hp}" />
+			<div th:if="${#fields.hasErrors('Hp')}" th:errors="*{Hp}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="attack">攻撃力:</label>
+			<input type="text" name="attack" th:field="*{attack}" />
+			<div th:if="${#fields.hasErrors('attack')}" th:errors="*{attack}" style="color: red;"></div>
+		</div>
+		<div>
+			<button type="submit">Submit</button>
+		</div>
 	</form>
 </body>
+
+</html>
 
 </html>

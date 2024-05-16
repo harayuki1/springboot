@@ -1,20 +1,66 @@
 @charset "UTF-8";
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    text-align: left;
+/* Reset default margin and padding */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dd, dt, table, th, td, form, fieldset, legend, input, textarea, button {
+    margin: 0;
+    padding: 0;
 }
 
-thead {
+/* Set font and background */
+body {
+    font-family: Arial, sans-serif;
     background-color: #f2f2f2;
 }
 
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
+/* Style form */
+form {
+    margin-bottom: 20px;
+    text-align: center; 
 }
 
+input[type="text"] {
+    padding: 12px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 8px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Style table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center; 
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Style table rows */
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
 }
