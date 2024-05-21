@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>品物リスト</title>
+
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+
+</head>
+
+<body>
+	<form th:action="@{/items}" method="get">
+		<input type="text" name="keyword" placeholder="検索">
+		<button type="submit">検索</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+				<th>商品名</th>
+				<th>在庫</th>
+				<th>説明</th>
+				<th>値段</th>
+				<th>カテゴリー</th>
+				<th>カート内</th>
+				<th>お気に入り</th>
+				<th>購入</th>
+				<th>キャンセル</th>
+				<th>★</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="item : ${items}">
+				<td th:text="${item.name}">商品名</td>
+				<td th:text="${item.storage}">在庫</td>
+				<td th:text="${item.exp}">説明</td>
+				<td th:text="${item.value}">説明</td>
+				<td th:text="${item.category}">説明</td>
+				<td th:text="${item.buy}">カート内</td>
+				<td th:text="${item.favorite}">お気に入り</td>
+				<td>
+					<form th:action="@{'/plus_item/' + ${item.id}}" method="post">
+						<button type="submit">+</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{'/minus_item/' + ${item.id}}" method="post">
+						<button type="submit">-</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{'/favorite_item/' + ${item.id}}" method="post">
+						<button type="submit">★</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{'/change_item/' + ${item.id}}" method="post">
+						<button type="submit">編集</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{'/delete_item/' + ${item.id}}" method="post">
+						<button type="submit">削除</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<form th:action="@{/item_form}" method="get">
+		<button type="submit">項目の追加</button>
+	</form>
+	<a href="/item_list">
+		<button>ホームへ</button>
+	</a>
+</body>
+
+</html>

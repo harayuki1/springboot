@@ -131,7 +131,7 @@ public class TestController {
 
 		return "result_validated2";
 	}
-
+	
 	@GetMapping("/persons")
 	public String showPersons(@RequestParam(value = "keyword", required = false) String keyword,Model model) {
 		List<Person> persons;
@@ -166,8 +166,41 @@ public class TestController {
 		model.addAttribute("person", new Person());
 		return "person_form";
 	}
-
 	
+	@GetMapping("/change/{id}")
+	public String personChange(@PathVariable("id") int id, Model model) {
+	    Person person = personRepository.findById(id);
+	    model.addAttribute("title", "編集画面");
+        model.addAttribute("person", person);
+        return "person_form";
+	}
+
+	@PostMapping("/change/{id}")
+	public String person_change(@PathVariable("id") int id, @Validated Person person,BindingResult bindingResult,Model model) {
+		if (bindingResult.hasErrors()) {
+	        model.addAttribute("title", "編集画面");
+	        model.addAttribute("person", personRepository.findById(id));
+	        return "person_form";
+	    }
+		Person newPerson = personRepository.findById(id);
+		newPerson.setName(person.getName());
+		newPerson.setAge(person.getAge());
+		newPerson.setAddress(person.getAddress());
+        // 必要に応じて他のフィールドも更新
+        personRepository.save(newPerson);
+	    
+	    return "redirect:/persons";
+		
+
+	}
+	
+
+	@GetMapping("/enemys")
+	public String showenemy(Model model) {
+        
+		model.addAttribute("enemys", enemyservice.getEnemyList());
+		return "enemys";
+	}
 	@PostMapping("/enemys")
 	public String showEnemys(@Validated Enemy enemy, BindingResult bindingResult,Model model) {
 		

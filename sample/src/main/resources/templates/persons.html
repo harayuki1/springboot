@@ -19,6 +19,7 @@
 				<th>Name</th>
 				<th>Age</th>
 				<th>Address</th>
+				<th>編集</th>
 				<th>削除</th>
 			</tr>
 		</thead>
@@ -27,6 +28,11 @@
 				<td th:text="${person.name}">Name</td>
 				<td th:text="${person.age}">Age</td>
 				<td th:text="${person.address}">Address</td>
+				<td>
+					<form th:action="@{'/change/' + ${person.id}}" method="post">
+						<button type="submit">編集</button>
+					</form>
+				</td>
 				<td>
 					<form th:action="@{'/delete/' + ${person.id}}" method="post">
 						<button type="submit">削除</button>

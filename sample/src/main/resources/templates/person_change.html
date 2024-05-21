@@ -9,7 +9,7 @@
 <body>
 	<h1 th:text="${title}"></h1>
 
-	<form th:action="@{${person.id} == null ? '/persons' : '/change/' + ${person.id}}" th:object="${person}" method="post">
+	<form th:action="@{/persons}" th:object="${person}" method="post">
 		<div>
 			<label for="name">名前:</label>
 			<input type="text" name="name" th:field="*{name}" />

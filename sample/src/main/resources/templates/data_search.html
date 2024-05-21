@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" th:href="@{/css/menu.css}" href="../static/css/menu.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+	<form th:action="@{/data_search}" method="get">
+		<input type="text" name="keyword" placeholder="検索" id="search">
+		<button type="submit">検索</button>
+	</form>
+	<!--	<div>-->
+	<!--		<h2>検索結果</h2>-->
+	<!--		<ol th:each="item, iterStat : ${data}">-->
+	<!--			<li class="flex">-->
+	<!--				<span th:text="${iterStat.count}"></span>日目の売上個数: <p th:text="${item}"></p>-->
+	<!--				<p>個</p>-->
+	<!--			</li>-->
+	<!--		</ol>-->
+	</div>
+
+	<div>
+		<h2>売上</h2>
+		<canvas id="myChart" width="400" height="150"></canvas>
+	</div>
+
+	<div class="container">
+		<div class="flex">
+			<a href="/item_list">
+				<button>ホームへ</button>
+			</a>
+			<a href="/items">
+				<button>データ編集</button>
+			</a>
+		</div>
+
+
+	</div>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var labels = [];
+		var data = [];
+		/*[# th:each="item, iterStat : ${data}"]*/
+		labels.push([[${iterStat.count} + 日目]]);
+		data.push([[${item}]]);
+		/*[/]*/
+
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: labels,
+				datasets: [{
+					label: '売上個数',
+					data: data,
+					backgroundColor: 'rgba(0, 0, 255, 0.2)',
+					borderColor: 'rgba(0, 0, 255, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		/*]]>*/
+	</script>
+</body>
+
+</html>

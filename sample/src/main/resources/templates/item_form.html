@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style2.css">
+
+</head>
+
+<body>
+	<h1 th:text="${title}"></h1>
+
+	<form th:action="@{${item.id} == null ? '/items' : '/change_item/' + ${item.id}}" th:object="${item}" method="post">
+		<div>
+			<label for="name">商品名:</label>
+			<input type="text" name="nae" th:field="*{name}" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="storage">在庫:</label>
+			<input type="text" name="storage" th:field="*{storage}" />
+			<div th:if="${#fields.hasErrors('storage')}" th:errors="*{storage}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="exp">説明:</label>
+			<input type="text" name="exp" th:field="*{exp}" />
+			<div th:if="${#fields.hasErrors('exp')}" th:errors="*{exp}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="value">値段:</label>
+			<input type="text" name="value" th:field="*{value}" />
+			<div th:if="${#fields.hasErrors('value')}" th:errors="*{value}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="category">カテゴリー:</label>
+			<input type="text" name="category" th:field="*{category}" />
+			<div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red;"></div>
+		</div>
+		<div>
+			<label for="buy">カートの中:</label>
+			<input type="text" name="buy" th:field="*{buy}" />
+		</div>
+		<div>
+			<label for="favorite">おきにいり:</label>
+			<input type="text" name="favorite" th:field="*{favorite}" />
+		</div>
+		<div>
+			<label for="day">日にち:</label>
+			<input type="text" name="day" th:field="*{day}" />
+		</div>
+		<div>
+			<button type="submit">追加</button>
+		</div>
+	</form>
+</body>
+
+</html>

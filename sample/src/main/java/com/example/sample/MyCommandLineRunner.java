@@ -1,10 +1,13 @@
 package com.example.sample;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import jakarta.transaction.Transactional;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
@@ -13,8 +16,14 @@ public class MyCommandLineRunner implements CommandLineRunner {
 	PersonRepository personRepository;
 	@Autowired
 	EnemyRepository enemyRepository;
+	@Autowired
+	ItemRepository itemRepository;
+	@Autowired
+	Game game;
+	
 
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("コマンドラインランナー実行開始");
 
@@ -36,7 +45,17 @@ public class MyCommandLineRunner implements CommandLineRunner {
 		personRepository.save(p3);
 		
 		enemyRepository.save(e);
-		enemyRepository.save(e1);
+//		enemyRepository.save(e1);
+		for(int i=1;i<51;i++) {
+			Random random = new Random();
+			int cate=random.nextInt(5)+1;
+			
+			itemRepository.save(new Item("name"+i,100,"exp"+i,(random.nextInt(100) + 1)*100,Integer.toString(cate)));
+		}
+		
+		
+	
+		game.init();
 //
 //		List<Person> list = personRepository.findByAgeBetween(8,16);
 //		for (Person p : list) {
@@ -54,7 +73,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
 		}
 		//personRepository.deleteById();
-
 		//personRepository.save(person);
 		System.out.println("コマンドラインランナー実行終了");
 	}
