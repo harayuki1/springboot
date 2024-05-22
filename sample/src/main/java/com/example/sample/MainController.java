@@ -188,17 +188,67 @@ public class MainController {
 		}
 		
 		game.day();
+		if(Game.gameover==true) {
+			return "gameover";
+		}
 		
 		model.addAttribute("items", items);
 		return "ok";
 	}
+	@GetMapping("/next")
+	public String next(Model model) {
+		List<Item> items = itemRepository.findAll();
+		for (Item item : items) {
+			//
+			item.getValue_data().add(item.getBuy());
+			item.setBuy(0);
+			item.setDay(Game.today);
+			item.setOrigin(item.getStorage());
+			itemRepository.save(item);
+		}
+		
+		game.day();
+		if(Game.gameover==true) {
+			game.init();
+			return "gameover";
+		}
+		model.addAttribute("items", items);
+		return "item_list";
+	}
+	
+	@GetMapping("/gameover")
+	public String gameover(Model model) {
+		game.init();
+		
+		return "gameover";
+	}
+
 
 	//商品データ
 	@GetMapping("/items")
 	public String showItems(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		List<Item> items;
 		if (keyword != null && !keyword.isEmpty()) {
-			items = itemRepository.findByNameContaining(keyword);
+			switch(keyword) {
+			case "category1":
+				items = itemRepository.findByCategory("1");
+				break;
+			case "category2":
+				items = itemRepository.findByCategory("2");
+				break;
+			case "category3":
+				items = itemRepository.findByCategory("3");
+				break;
+			case "category4":
+				items = itemRepository.findByCategory("4");
+				break;
+			case "category5":
+				items = itemRepository.findByCategory("5");
+				break;
+			default:
+				items = itemRepository.findByNameContaining(keyword);
+			}
+			
 		} else {
 			items = itemRepository.findAll();
 		}
@@ -206,6 +256,7 @@ public class MainController {
 		//model.addAttribute("keyword", keyword);
 		return "items";
 	}
+	
 
 	@PostMapping("/items")
 	public String saveItem(@Validated Item item, BindingResult bindingResult, Model model) {
@@ -281,19 +332,27 @@ public class MainController {
 	    }
 
 	    List<Integer> data = new ArrayList<>();
-	    if (!items.isEmpty()) {
-	        for (int i = 0; i < items.size(); i++) {
+	    
+	    
+	        for (int i = 0; i < Game.today-1 ; i++) {
 	            int total = 0;
 	            for (Item item : items) {
 	                if (item.getValue_data().size() > i) {
 	                    total += item.getValue_data().get(i);
-	                } else {
-	                    //System.out.println("Value_data size: " + item.getValue_data().size() + " at item index: " + i);
-	                }
+	                } 
 	            }
 	            data.add(total);
 	        }
-	    }
+	        
+	        if(data.size()<Game.today-1) {
+	        	int a=Game.today-data.size()-1;
+	        	for(int i=0;i<a;i++){
+	        		int none=0;
+	        		data.add(none);
+	        		
+	        	}
+	        }
+	    
 	    model.addAttribute("data", data);
 	    return "data_search_category";
 	}

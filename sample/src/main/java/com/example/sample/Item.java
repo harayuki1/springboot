@@ -3,10 +3,12 @@ package com.example.sample;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +34,7 @@ public class Item {
 		this.favorite=false;
 		this.day=1;
 		this.origin=storage;
+		this.value_data = new ArrayList<>();
 	}
 	
 	@Id
@@ -64,7 +67,10 @@ public class Item {
     
     private int origin;
 
-	private List<Integer> value_data=new ArrayList<>();
+    @Lob
+	@ElementCollection
+	private List<Integer> value_data;
+
 
 	
 	

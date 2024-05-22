@@ -50,7 +50,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 			Random random = new Random();
 			int cate=random.nextInt(5)+1;
 			
-			itemRepository.save(new Item("name"+i,100,"exp"+i,(random.nextInt(100) + 1)*100,Integer.toString(cate)));
+			itemRepository.save(new Item("name"+i,20,"exp"+i,(random.nextInt(100) + 1)*100,Integer.toString(cate)));
 		}
 		
 		

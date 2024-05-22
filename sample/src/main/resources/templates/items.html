@@ -9,10 +9,32 @@
 </head>
 
 <body>
-	<form th:action="@{/items}" method="get">
-		<input type="text" name="keyword" placeholder="検索">
-		<button type="submit">検索</button>
-	</form>
+	<div class="flex">
+		<form th:action="@{/items}" method="get">
+			<input type="text" name="keyword" placeholder="検索">
+			<button type="submit">検索</button>
+		</form>
+		<form th:action="@{/items}" method="get">
+			<input type="hidden" name="keyword" value="category1">
+			<button type="submit">カテゴリー１</button>
+		</form>
+		<form th:action="@{/items}" method="get">
+			<input type="hidden" name="keyword" value="category2">
+			<button type="submit">カテゴリー２</button>
+		</form>
+		<form th:action="@{/items}" method="get">
+			<input type="hidden" name="keyword" value="category3">
+			<button type="submit">カテゴリー３</button>
+		</form>
+		<form th:action="@{/items}" method="get">
+			<input type="hidden" name="keyword" value="category4">
+			<button type="submit">カテゴリー４</button>
+		</form>
+		<form th:action="@{/items}" method="get">
+			<input type="hidden" name="keyword" value="category5">
+			<button type="submit">カテゴリー５</button>
+		</form>
+	</div>
 	<table>
 		<thead>
 			<tr>

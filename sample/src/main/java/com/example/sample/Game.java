@@ -1,5 +1,6 @@
 package com.example.sample;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,10 +18,37 @@ public class Game {
 	public static int[] category = new int[6];
 
 	public static int today = 1;
+	public static boolean gameover = false;
 
 	@Transactional
 	public void init() {
+		
 
+		if (Game.gameover == true) {
+			
+//			for (int i = 1; i <= itemRepository.findAll().size(); i++) {
+//				itemRepository.deleteById(i);
+//			}
+			for (int i = 1; i < 51; i++) {
+				Random random = new Random();
+				int cate = random.nextInt(5) + 1;
+
+				itemRepository.findById(i).setStorage(20);
+				itemRepository.findById(i).setValue( (random.nextInt(100) + 1) * 100);
+				itemRepository.findById(i).setCategory(Integer.toString(cate));
+				itemRepository.findById(i).setBuy(0);
+				itemRepository.findById(i).setFavorite(false);
+				itemRepository.findById(i).setDay(1);
+				itemRepository.findById(i).setOrigin(20);
+				itemRepository.findById(i).setValue_data(new ArrayList<>());
+				
+				
+				itemRepository.save(itemRepository.findById(i));
+			}
+			Game.today = 1;
+			Game.gameover = false;
+
+		}
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 3; k++) {
 				Random random = new Random();
@@ -53,16 +81,25 @@ public class Game {
 			int change = random.nextInt(15) + 1;
 			List<Item> items;
 			if (value > 60) {
-				
+
 				items = itemRepository.findByCategory(String.valueOf(findMaxIndex(category)));
 
-			}else {
+			} else {
 				items = itemRepository.findAll();
 			}
 			int randomIndex = random.nextInt(items.size());
 			Item item = items.get(randomIndex);
-			item.setBuy(item.getBuy() + change);
-			item.setStorage(item.getStorage() - change);
+			if ((item.getStorage() - 1) >= 0) {
+				item.setBuy(item.getBuy() + change);
+				if (item.getStorage() - change < 0) {
+					item.setStorage(0);
+				} else {
+					item.setStorage(item.getStorage() - change);
+				}
+			} else {
+				Game.gameover = true;
+				return;
+			}
 			category[Integer.parseInt(item.getCategory())]++;
 			itemRepository.save(item);
 		}
@@ -76,7 +113,8 @@ public class Game {
 			itemRepository.save(item);
 		}
 
-		System.out.println("a");
+		System.out.println(String.valueOf(findMaxIndex(category)));
+
 		Game.today++;
 	}
 
