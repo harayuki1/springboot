@@ -41,7 +41,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
+
 	@NotBlank(message = "名前を入力してください")
     private String name;
 

@@ -19,6 +19,7 @@ public class Game {
 
 	public static int today = 1;
 	public static boolean gameover = false;
+	public static int total_value =0;
 
 	@Transactional
 	public void init() {
@@ -47,6 +48,7 @@ public class Game {
 			}
 			Game.today = 1;
 			Game.gameover = false;
+			Game.total_value = 0;
 
 		}
 		for (int i = 0; i < 10; i++) {
@@ -69,6 +71,11 @@ public class Game {
 				item.setOrigin(item.getStorage());
 				itemRepository.save(item);
 			}
+			int total=0;
+			for (Item item : items) {
+				total = total + item.getBuy() * item.getValue();
+			}
+			Game.total_value +=total;
 
 			Game.today++;
 		}
@@ -113,7 +120,12 @@ public class Game {
 			itemRepository.save(item);
 		}
 
-		System.out.println(String.valueOf(findMaxIndex(category)));
+		int total=0;
+		for (Item item : items) {
+			total = total + item.getBuy() * item.getValue();
+		}
+		Game.total_value +=total;
+		//System.out.println(String.valueOf(findMaxIndex(category)));
 
 		Game.today++;
 	}

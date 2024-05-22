@@ -22,6 +22,7 @@ public class MainController {
 	@Autowired
 	Game game;
 
+	public int total=0;
 	
 	//商品リスト
 	@GetMapping("/item_list")
@@ -128,7 +129,7 @@ public class MainController {
 	public String Item_list_cart(Model model) {
 
 		List<Item> items = itemRepository.findByBuyGreaterThan(0);
-		int total = 0;
+		total = 0;
 		for (Item item : items) {
 			total = total + item.getBuy() * item.getValue();
 		}
@@ -160,6 +161,7 @@ public class MainController {
 		itemRepository.save(itemRepository.findById(id));
 		return "redirect:/item_cart";
 	}
+	
 
 	//お気に入り商品
 	@PostMapping("/favorite_item/{id}/cart")
@@ -186,7 +188,6 @@ public class MainController {
 			item.setOrigin(item.getStorage());
 			itemRepository.save(item);
 		}
-		
 		game.day();
 		if(Game.gameover==true) {
 			return "gameover";
@@ -209,7 +210,9 @@ public class MainController {
 		
 		game.day();
 		if(Game.gameover==true) {
+			model.addAttribute("total", Game.total_value);
 			game.init();
+			
 			return "gameover";
 		}
 		model.addAttribute("items", items);
