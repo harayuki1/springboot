@@ -19,31 +19,29 @@ public class Game {
 
 	public static int today = 1;
 	public static boolean gameover = false;
-	public static int total_value =0;
+	public static int total_value = 0;
 
 	@Transactional
 	public void init() {
-		
 
 		if (Game.gameover == true) {
-			
-//			for (int i = 1; i <= itemRepository.findAll().size(); i++) {
-//				itemRepository.deleteById(i);
-//			}
+
+			//			for (int i = 1; i <= itemRepository.findAll().size(); i++) {
+			//				itemRepository.deleteById(i);
+			//			}
 			for (int i = 1; i < 51; i++) {
 				Random random = new Random();
 				int cate = random.nextInt(5) + 1;
 
 				itemRepository.findById(i).setStorage(20);
-				itemRepository.findById(i).setValue( (random.nextInt(100) + 1) * 100);
+				itemRepository.findById(i).setValue((random.nextInt(100) + 1) * 100);
 				itemRepository.findById(i).setCategory(Integer.toString(cate));
 				itemRepository.findById(i).setBuy(0);
 				itemRepository.findById(i).setFavorite(false);
 				itemRepository.findById(i).setDay(1);
 				itemRepository.findById(i).setOrigin(20);
 				itemRepository.findById(i).setValue_data(new ArrayList<>());
-				
-				
+
 				itemRepository.save(itemRepository.findById(i));
 			}
 			Game.today = 1;
@@ -57,11 +55,18 @@ public class Game {
 				int id = random.nextInt(50) + 1;
 				int change = random.nextInt(5) + 1;
 
-				itemRepository.findById(id).setBuy(itemRepository.findById(id).getBuy() + change);
-				itemRepository.findById(id).setStorage(itemRepository.findById(id).getStorage() - change);
+				int total = 0;
+				Item item=itemRepository.findById(id);
+				item.setBuy(itemRepository.findById(id).getBuy() + change);
+				item.setStorage(itemRepository.findById(id).getStorage() - change);
+				total = total + item.getBuy() * item.getValue();
+				Game.total_value += total;
 				category[Integer.parseInt(itemRepository.findById(id).getCategory())]++;
 				itemRepository.save(itemRepository.findById(id));
 			}
+			
+			
+			
 			List<Item> items = itemRepository.findAll();
 			for (Item item : items) {
 
@@ -71,12 +76,9 @@ public class Game {
 				item.setOrigin(item.getStorage());
 				itemRepository.save(item);
 			}
-			int total=0;
-			for (Item item : items) {
-				total = total + item.getBuy() * item.getValue();
-			}
-			Game.total_value +=total;
+			
 
+			
 			Game.today++;
 		}
 	}
@@ -107,6 +109,9 @@ public class Game {
 				Game.gameover = true;
 				return;
 			}
+			int total = 0;
+			total = total + item.getBuy() * item.getValue();
+			Game.total_value += total;
 			category[Integer.parseInt(item.getCategory())]++;
 			itemRepository.save(item);
 		}
@@ -120,13 +125,11 @@ public class Game {
 			itemRepository.save(item);
 		}
 
-		int total=0;
-		for (Item item : items) {
-			total = total + item.getBuy() * item.getValue();
-		}
-		Game.total_value +=total;
+		
+		
 		//System.out.println(String.valueOf(findMaxIndex(category)));
 
+		
 		Game.today++;
 	}
 

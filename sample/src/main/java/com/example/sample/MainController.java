@@ -23,7 +23,11 @@ public class MainController {
 	Game game;
 
 	public int total=0;
-	
+	@GetMapping("/")
+    public String getIndex() {
+        return "index";
+    }
+
 	//商品リスト
 	@GetMapping("/item_list")
 	public String Item_list(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
@@ -180,6 +184,7 @@ public class MainController {
 	@GetMapping("/ok")
 	public String ok(Model model) {
 		List<Item> items = itemRepository.findAll();
+		Game.total_value += total;
 		for (Item item : items) {
 			
 			item.getValue_data().add(item.getBuy());
@@ -192,6 +197,7 @@ public class MainController {
 		if(Game.gameover==true) {
 			return "gameover";
 		}
+		System.out.println(Game.total_value);
 		
 		model.addAttribute("items", items);
 		return "ok";
@@ -215,6 +221,7 @@ public class MainController {
 			
 			return "gameover";
 		}
+		System.out.println(Game.total_value);
 		model.addAttribute("items", items);
 		return "item_list";
 	}

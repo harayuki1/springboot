@@ -31,7 +31,7 @@
 				<li><a href="category5" class="small">カテゴリー5</a></li>
 				<li><a href="data_search"id="hidden">売上</a></li>
 				<li><a href="data_search_category"id="hidden">カテゴリー別売上</a></li>
-				<li><a href="next">次の日へ</a></li>
+				<li><a href="next" id =hidden>次の日へ</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -54,18 +54,21 @@
 			</div>
 			<div class="flex">
 				<h5>カート</h5>
-				<form th:action="@{'/plus_item/' + ${item.id}+'/cart'}" method="post">
-					<button type="submit">+</button>
-				</form>
+				<button class="plus-button" th:data-id="${item.id}">+</button>
+<!--				<form th:action="@{'/plus_item/' + ${item.id}+'/cart'}" method="post">-->
+<!--					<button type="submit">+</button>-->
+<!--				</form>-->
 				<h4 th:text="${item.buy}">値段</h4>
 				<h4>個</h4>
-				<form th:action="@{'/minus_item/' + ${item.id}+'/cart'}" method="post">
-					<button type="submit">-</button>
-				</form>
+				<button class="minus-button" th:data-id="${item.id}">-</button>
+<!--				<form th:action="@{'/minus_item/' + ${item.id}+'/cart'}" method="post">-->
+<!--					<button type="submit">-</button>-->
+<!--				</form>-->
 				<h5>お気に入りに追加</h5>
-				<form th:action="@{'/favorite_item/' + ${item.id}+'/cart'}" method="post">
-					<button type="submit" th:text="${item.favorite ? '★' : '☆'}">★</button>
-				</form>
+				<button class="favorite-button" th:data-id="${item.id}" th:text="${item.favorite ? '★' : '☆'}"></button>
+<!--				<form th:action="@{'/favorite_item/' + ${item.id}+'/cart'}" method="post">-->
+<!--					<button type="submit" th:text="${item.favorite ? '★' : '☆'}">★</button>-->
+<!--				</form>-->
 			</div>
 		</div>
 		<div class="flex">
@@ -80,6 +83,7 @@
 	</div>
 	<!--	<script src="/js/itemActions.js"></script>-->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="/js/itemActions.js"></script>
 	<script src="/js/menu.js"></script>
 
 

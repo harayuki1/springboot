@@ -24,16 +24,7 @@ public class TestController {
 	PersonRepository personRepository;
 	@Autowired
 	EnemyRepository enemyRepository;
-	
-	
-	@GetMapping("/")
-	public String getIndex(Model model) {
-		model.addAttribute("greeting", "こんにちは");
-		model.addAttribute("abc", "aaa");
-		model.addAttribute("aaa", "abc");
 
-		return "index";
-	}
 
 	@GetMapping("/home")
 	public String getHome() {
@@ -131,93 +122,96 @@ public class TestController {
 
 		return "result_validated2";
 	}
-	
+
 	@GetMapping("/persons")
-	public String showPersons(@RequestParam(value = "keyword", required = false) String keyword,Model model) {
+	public String showPersons(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		List<Person> persons;
-        if (keyword != null && !keyword.isEmpty()) {
-            persons = personRepository.findByNameContaining(keyword);
-        } else {
-            persons = personRepository.findAll();
-        }
+		if (keyword != null && !keyword.isEmpty()) {
+			persons = personRepository.findByNameContaining(keyword);
+		} else {
+			persons = personRepository.findAll();
+		}
 		model.addAttribute("persons", persons);
 		model.addAttribute("keyword", keyword);
 		return "persons";
 	}
+
 	@PostMapping("/persons")
-    public String savePerson(@Validated Person person, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("title", "入力画面");
-            model.addAttribute("person", person);
-            return "person_form";
-        }
-        personRepository.save(person);
-        return "redirect:/persons";
-    }
+	public String savePerson(@Validated Person person, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("title", "入力画面");
+			model.addAttribute("person", person);
+			return "person_form";
+		}
+		personRepository.save(person);
+		return "redirect:/persons";
+	}
+
 	@PostMapping("/delete/{id}")
-    public String deletePerson(@PathVariable("id") int id) {
-        personRepository.deleteById(id);
-        return "redirect:/persons"; 
-    }
-	
+	public String deletePerson(@PathVariable("id") int id) {
+		personRepository.deleteById(id);
+		return "redirect:/persons";
+	}
+
 	@GetMapping("/person_form")
 	public String person_form(Model model) {
 		model.addAttribute("title", "入力画面");
 		model.addAttribute("person", new Person());
 		return "person_form";
 	}
-	
+
 	@GetMapping("/change/{id}")
 	public String personChange(@PathVariable("id") int id, Model model) {
-	    Person person = personRepository.findById(id);
-	    model.addAttribute("title", "編集画面");
-        model.addAttribute("person", person);
-        return "person_form";
+		Person person = personRepository.findById(id);
+		model.addAttribute("title", "編集画面");
+		model.addAttribute("person", person);
+		return "person_form";
 	}
 
 	@PostMapping("/change/{id}")
-	public String person_change(@PathVariable("id") int id, @Validated Person person,BindingResult bindingResult,Model model) {
+	public String person_change(@PathVariable("id") int id, @Validated Person person, BindingResult bindingResult,
+			Model model) {
 		if (bindingResult.hasErrors()) {
-	        model.addAttribute("title", "編集画面");
-	        model.addAttribute("person", personRepository.findById(id));
-	        return "person_form";
-	    }
+			model.addAttribute("title", "編集画面");
+			model.addAttribute("person", personRepository.findById(id));
+			return "person_form";
+		}
 		Person newPerson = personRepository.findById(id);
 		newPerson.setName(person.getName());
 		newPerson.setAge(person.getAge());
 		newPerson.setAddress(person.getAddress());
-        // 必要に応じて他のフィールドも更新
-        personRepository.save(newPerson);
-	    
-	    return "redirect:/persons";
-		
+		// 必要に応じて他のフィールドも更新
+		personRepository.save(newPerson);
+
+		return "redirect:/persons";
 
 	}
+
 	
 
 	@GetMapping("/enemys")
-	public String showenemy(Model model) {
-        
-		model.addAttribute("enemys", enemyservice.getEnemyList());
-		return "enemys";
-	}
+    public String showEnemys(Model model) {
+        model.addAttribute("enemys", enemyservice.getEnemyList());
+        return "enemys";
+    }
+
 	@PostMapping("/enemys")
-	public String showEnemys(@Validated Enemy enemy, BindingResult bindingResult,Model model) {
-		
+	public String showEnemys(@Validated Enemy enemy, BindingResult bindingResult, Model model) {
+
 		if (bindingResult.hasErrors()) {
-            model.addAttribute("title", "入力画面");
-            model.addAttribute("enemy", enemy);
-            return "enemy_form";
-        }
-        enemyRepository.save(enemy);
-        return "redirect:/enemys";
+			model.addAttribute("title", "入力画面");
+			model.addAttribute("enemy", enemy);
+			return "enemy_form";
+		}
+		enemyRepository.save(enemy);
+		return "redirect:/enemys";
 	}
-	
+
 	@GetMapping("/enemy_form")
 	public String getEnemyform(Model model) {
 		model.addAttribute("title", "入力画面");
 		model.addAttribute("enemy", new Enemy());
 		return "enemy_form";
 	}
-	
+
 }

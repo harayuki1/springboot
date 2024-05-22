@@ -67,7 +67,14 @@
 				scales: {
 					yAxes: [{
 						ticks: {
-							beginAtZero: true
+
+							suggestedMax: 20,//最大が1000
+							suggestedMin: 0,//最小が0
+							callback: function (value) {
+								return value + '個'//数字＋Kgで表示
+								beginAtZero: true
+
+							}
 						}
 					}]
 				}

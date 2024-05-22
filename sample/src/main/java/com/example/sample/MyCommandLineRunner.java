@@ -45,7 +45,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 		personRepository.save(p3);
 		
 		enemyRepository.save(e);
-//		enemyRepository.save(e1);
+		enemyRepository.save(e1);
 		for(int i=1;i<51;i++) {
 			Random random = new Random();
 			int cate=random.nextInt(5)+1;

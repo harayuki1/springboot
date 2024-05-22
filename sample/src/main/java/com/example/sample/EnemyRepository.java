@@ -13,5 +13,6 @@ public interface EnemyRepository extends JpaRepository<Enemy, Integer>{
 	//前後に％などを付けなくていい
 	List<Enemy> findByNameContaining(String name);
 	Enemy findById(int id);
+	
 
 }

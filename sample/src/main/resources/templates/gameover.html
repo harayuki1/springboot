@@ -29,20 +29,22 @@
 				<li><a href="category3" class="small">カテゴリー3</a></li>
 				<li><a href="category4" class="small">カテゴリー4</a></li>
 				<li><a href="category5" class="small">カテゴリー5</a></li>
-				<li><a href="data_search"id="hidden">売上</a></li>
+				<li><a href="data_search" id="hidden">売上</a></li>
 				<li><a href="data_search_category" id="hidden">カテゴリー別売上</a></li>
 				<li><a href="next">次の日へ</a></li>
 			</ul>
 		</div>
 	</nav>
 	<div class="container">
-		<div class="flex">
-			<h1>在庫がなくなりました</h1>
-			<h2 th:text="${total}"><h2>
-			<a href="/item_list">
+
+		<h1>在庫がなくなりました</h1>
+		<d class="flex">
+			<h2>売上金額は：<h2 th:text="${total}"></h2>
+			</h2>
+			<a href="item_list">
 				<button>初めから</button>
 			</a>
-		</div>
+	</div>
 
 
 	</div>
